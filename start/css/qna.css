@@ -6,4 +6,40 @@
     background-color: whitesmoke;
     text-align: center;
     border-radius: 10px;
+    font-size: 30px;
+    width: 80%;
+}
+
+.answerList {
+    background-color: whitesmoke;
+    color: brown;
+    border-radius: 10px;
+    display: block; /*한 줄에 하나씩 보여주기 위한 것*/
+    width: 80%;
+    border: none;
+    font-size: 20px;
+}
+
+/*마우스를 올리거나 클릭할 경우 색상 변경*/
+.answerList:hover, .answerList:focus {
+    background-color: palevioletred;
+    color: white;
+}
+
+.status {
+    height: 20px;
+    width: 80%;
+    background-color: white;
+    border-radius: 20px;
+}
+
+.statusBar {
+    height: 100%;
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#edb3c2+0,e52964+50,eebcc9+100 */
+    background: #edb3c2; /* Old browsers */
+    background: -moz-linear-gradient(top,  #edb3c2 0%, #e52964 50%, #eebcc9 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #edb3c2 0%,#e52964 50%,#eebcc9 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #edb3c2 0%,#e52964 50%,#eebcc9 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#edb3c2', endColorstr='#eebcc9',GradientType=0 ); /* IE6-9 */
+    border-radius: 20px;
 }
