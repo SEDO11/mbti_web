@@ -5,7 +5,7 @@ const resultImg = document.querySelector('#resultImg');
 const resultName = document.querySelector('.resultName');
 const resultContent = document.querySelector('.resultDesc');
 const endPoint = 12;
-const select = [];
+const select = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 let start = 1
 
@@ -33,50 +33,11 @@ function createResult(idx) {
     resultContent.appendChild(divContent);
 }
 
-/** 결과값을 토대로 해당 사용자가 뭐에 해당하는지 연산하는 함수 */
+/** 결과값 연산하는 함수 */
 function calResult() {
-    let pointArray = [
-        { name: 'mouse', value: 0, key: 0},
-        { name: 'cow', value: 0, key: 1},
-        { name: 'tiger', value: 0, key: 2},
-        { name: 'rabbit', value: 0, key: 3},
-        { name: 'dragon', value: 0, key: 4},
-        { name: 'snake', value: 0, key: 5},
-        { name: 'horse', value: 0, key: 6},
-        { name: 'sheep', value: 0, key: 7},
-        { name: 'monkey', value: 0, key: 8},
-        { name: 'chick', value: 0, key: 9},
-        { name: 'dog', value: 0, key: 10},
-        { name: 'pig', value: 0, key: 11}
-    ]
-
-    for(let i=0; i<endPoint; i++) {
-        let target = qnaList[i].a[select[i]];
-        for(let j=0; j<target.type.length; j++) {
-            for(let k=0; k<endPoint; k++) {
-                if (target.type[j] === pointArray[k].name) {
-                    pointArray[k].value += 1;
-                    break
-                }
-            }
-        }
-    }
-
-    let resultArray = pointArray.sort(function (a, b) {
-        if(a.value > b.value) {
-            return -1;
-        }
-        if(a.value < b.value) {
-            return 1;
-        }
-        return 0;
-    })
-
-    let resultword = resultArray[0].key;
-    console.log(resultArray);
-    return resultword;
+    let result = select.indexOf(Math.max(...select))
+    return result;
 }
-
 
 /** answer을 눌렀을 때 나타내고 사라지게 하는 함수 */
 function addAnswer(answerText, qIdx, idx) {
@@ -100,8 +61,12 @@ function addAnswer(answerText, qIdx, idx) {
         }
         
         setTimeout(() => {
-            select[qIdx] = idx;
-            for(let i=0; i<children.length; i++) {;
+            let target = qnaList[qIdx].a[idx].type;
+            for(let j=0; j<target.length; j++) {
+                select[target[j]] += 1;
+            }
+
+            for(let i=0; i<children.length; i++) { // 다음 문답으로 넘어가는 코드
                 children[i].style.display = 'none';
             }
             goNext(++qIdx);
@@ -114,11 +79,7 @@ function addAnswer(answerText, qIdx, idx) {
 function goNext(qIdx) {
     if(qIdx === endPoint) {
         begin(1, 0)
-        console.log(select);
-        for(let i in select) {
-            let target = qnaList[i].a[select[i]].type;
-            console.log(target);
-        }
+        console.log(select)
         return
     }
 
@@ -137,10 +98,10 @@ function goNext(qIdx) {
 function begin(start, move) {
     let sec1, sec2
 
-    if(move) {
+    if(move) { // main -> qna
         sec1 = main
         sec2 = qna
-    } else {
+    } else { // qna -> result
         sec1 = qna
         sec2 = result
     }
@@ -152,8 +113,8 @@ function begin(start, move) {
             sec2.style.WebkitAnimation = 'fadeIn 1s';
             sec2.style.animation = 'fadeIn 1s';
             setTimeout(() => {
-                sec1.style.display = 'none' // 메인화면을 끄고
-                sec2.style.display = 'block' // qna화면을 보여준다
+                sec1.style.display = 'none' // 이전 화면을 끄고
+                sec2.style.display = 'block' // 다음 화면을 보여준다
             }, 450)
             if(move) {
                 let qIdx = 0;
