@@ -126,3 +126,8 @@ function begin(start, move) {
         start = 0
     }
 }
+
+/**시작 화면으로 돌아가는 함수 */
+function moveHome() {
+    location.href="./index.html";
+}
